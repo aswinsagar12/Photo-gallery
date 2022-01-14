@@ -6,6 +6,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { createGlobalStyle } from "styled-components";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { SRLWrapper } from "simple-react-lightbox";
 
 //style
 
@@ -35,28 +36,32 @@ const App = () => {
     fetchImages();
   });
 
-  const fetchImages = () => {
-    const apiRoot = "http://www.mocky.io/v2/5ecb5c353000008f00ddd5a0";
+  const fetchImages = async() => {
+    const response =await axios.get("http://www.mocky.io/v2/5ecb5c353000008f00ddd5a0");
+    const data = await response.data;
+    setImages(data);
 
-    axios.get(`${apiRoot}`).then((res) => setImages([...images,...res.data]));
+
   };
   return (
-    <div>
-      <Heading />
-      <GlobalStyle />
-      <InfiniteScroll
-        dataLength={images.length}
-        next={fetchImages}
-        hasMore={true}
-        loader={<Imgloader />}
-      >
-        <WrapperImage>
-          {images.map((image) => (
-            <Wallimage url={image.urls.thumb} key={image.id} />
-          ))}
-        </WrapperImage>
-      </InfiniteScroll>
-    </div>
+    <SRLWrapper>
+      <div>
+        <Heading />
+        <GlobalStyle />
+        <InfiniteScroll
+          dataLength={images.length}
+          next={fetchImages}
+          hasMore={true}
+          loader={<Imgloader />}
+        >
+          <WrapperImage>
+            {images.map((image) => (
+              <Wallimage url={image.urls.thumb} key={image.id} />
+            ))}
+          </WrapperImage>
+        </InfiniteScroll>
+      </div>
+    </SRLWrapper>
   );
 };
 
