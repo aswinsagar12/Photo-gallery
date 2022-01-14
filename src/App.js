@@ -20,32 +20,26 @@ body{
 }
 `;
 const WrapperImage = styled.section`
-  max-width: 70rem;
-  border-radius:5px;
-  margin:  auto;
-  display: grid;
-  grid-gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  grid-auto-rows: 250px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: space-around;
+  flex-direction: column;
+  max-height: 100vh;
 `;
 
 const App = () => {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
-   fetchImages();
+    fetchImages();
   });
 
-  const fetchImages =()=>{
+  const fetchImages = () => {
     const apiRoot = "http://www.mocky.io/v2/5ecb5c353000008f00ddd5a0";
 
-    const accessKey = process.env.REACT_APP_ACCESSKEY;
-
-    axios
-      .get(`${apiRoot}/photos/random?client_id=${accessKey}&count=10`)
-      .then((res) => setImages([...images, ...res.data]));
-
-  }
+    axios.get(`${apiRoot}`).then((res) => setImages([...images,...res.data]));
+  };
   return (
     <div>
       <Heading />

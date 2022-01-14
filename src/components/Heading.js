@@ -14,7 +14,7 @@ const H1= styled.h1`
 export const Heading = () => {
     return (
         <Header>
-        <H1>Image Wall Gallery</H1>
+        <H1/>
         </Header>
     )
 }
